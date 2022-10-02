@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart' as syspaths;
 class ImageInput extends StatefulWidget {
   final Function onSelectImage;
 
-  ImageInput(this.onSelectImage);  
+  const ImageInput(this.onSelectImage, {Key? key}) : super(key: key);
 
   @override
   State<ImageInput> createState() => _ImageInputState();
@@ -16,37 +16,23 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
 
-  // Future<void> _takePicture() async {
-  //   final picker = ImagePicker();
-  //   final imageFile =
-  //       await picker.pickImage(source: ImageSource.camera, maxWidth: 600);
-  // }
-
-  // Future<void> _openGallery() async {
-  //   final picker = ImagePicker();
-  //   final imageFile =
-  //       await picker.pickImage(source: ImageSource.gallery, maxWidth: 600);
-  // }
-
   Future<void> _selectImage(String option) async {
     final picker = ImagePicker();
     final imageFile = await picker.pickImage(
         source: option == 'camera' ? ImageSource.camera : ImageSource.gallery,
         maxWidth: 600);
-    if(imageFile == null){return;}
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
       _storedImage = File(imageFile.path);
     });
     final appDir = await syspaths.getApplicationDocumentsDirectory();
+    // ignore: non_constant_identifier_names
     final image_File = File(imageFile.path);
     final fileName = path.basename(imageFile.path);
     final savedImage = await image_File.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
-    // print('appDir: $appDir');
-    // print('imageFile $imageFile');
-    // print('image_File: $image_File');
-    // print('fileName: $fileName');
-    // print('savedImage: $savedImage');
   }
 
   @override
@@ -58,19 +44,19 @@ class _ImageInputState extends State<ImageInput> {
           width: 150,
           decoration:
               BoxDecoration(border: Border.all(width: 1, color: Colors.grey)),
+          alignment: Alignment.center,
           child: _storedImage != null
               ? Image.file(
                   _storedImage!,
                   fit: BoxFit.cover,
                   width: double.infinity,
                 )
-              : Text(
+              : const Text(
                   'No Image Taken',
                   textAlign: TextAlign.center,
                 ),
-          alignment: Alignment.center,
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
@@ -78,17 +64,13 @@ class _ImageInputState extends State<ImageInput> {
           children: [
             TextButton.icon(
               onPressed: () => _selectImage('camera'),
-              icon: Icon(Icons.camera_alt_outlined),
-              label: Text('Take Picture'),
-              // style: ElevatedButton.styleFrom(
-              //     textStyle: TextStyle(color: Theme.of(context).primaryColor)),
+              icon: const Icon(Icons.camera_alt_outlined),
+              label: const Text('Take Picture'),
             ),
             TextButton.icon(
               onPressed: () => _selectImage('gallery'),
-              icon: Icon(Icons.photo_library_outlined),
-              label: Text('Open Gallery'),
-              // style: ElevatedButton.styleFrom(
-              //     textStyle: TextStyle(color: Theme.of(context).primaryColor)),
+              icon: const Icon(Icons.photo_library_outlined),
+              label: const Text('Open Gallery'),
             ),
           ],
         ))

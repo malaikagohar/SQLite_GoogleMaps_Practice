@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:great_places_app/helpers/db_helper.dart';
 import 'package:great_places_app/helpers/location_helper.dart';
-
 import '../models/place.dart';
 
 class GreatPlaces with ChangeNotifier {
@@ -13,7 +11,7 @@ class GreatPlaces with ChangeNotifier {
     return [..._items];
   }
 
-  Place findById (String id) {
+  Place findById(String id) {
     return _items.firstWhere((place) => place.id == id);
   }
 
@@ -40,7 +38,6 @@ class GreatPlaces with ChangeNotifier {
       'loc_lng': newPlace.location!.longitude,
       'address': newPlace.location!.address!
     });
-    // print('addPlace: ${items.map((e) => e.title)}');
   }
 
   Future<void> fetchAndSetPlaces() async {

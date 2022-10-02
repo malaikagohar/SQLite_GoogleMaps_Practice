@@ -1,8 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:great_places_app/models/place.dart';
 import 'package:great_places_app/providers/great_places.dart';
 import 'package:great_places_app/widgets/image_input.dart';
@@ -31,7 +28,9 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   }
 
   void _savePlace() {
-    if (_titleController.text.isEmpty || _pickedImage == null || _pickedLocation == null) {
+    if (_titleController.text.isEmpty ||
+        _pickedImage == null ||
+        _pickedLocation == null) {
       return;
     }
     Provider.of<GreatPlaces>(context, listen: false)
@@ -42,7 +41,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Add a New Place')),
+        appBar: AppBar(title: const Text('Add a New Place')),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,14 +53,14 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                 child: Column(
                   children: [
                     TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: const InputDecoration(labelText: 'Title'),
                       controller: _titleController,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     ImageInput(_selectImage),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     LocationInput(_selectPlace)
                   ],
                 ),
@@ -69,8 +68,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             )),
             ElevatedButton.icon(
               onPressed: _savePlace,
-              icon: Icon(Icons.add),
-              label: Text('Add Place'),
+              icon: const Icon(Icons.add),
+              label: const Text('Add Place'),
               style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).colorScheme.secondary,
                   elevation: 0,
